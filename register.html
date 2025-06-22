@@ -4,32 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - AI Crypto Analyst</title>
-    <!-- We can reuse the same style.css file -->
+    <!-- We can reuse the same style sheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Create an Account</h1>
-        
-        <div class="form-section">
-            <input type="text" id="usernameInput" placeholder="Choose a username">
-            <input type="password" id="passwordInput" placeholder="Choose a password">
+        <h1>Create Account</h1>
+        <div class="input-section" style="flex-direction: column;">
+            <input type="text" id="usernameInput" placeholder="Enter a username">
+            <br>
+            <input type="password" id="passwordInput" placeholder="Enter a password">
+            <br>
             <button id="registerButton">Register</button>
         </div>
 
-        <!-- This div will show success or error messages -->
-        <div id="message" class="message-section hidden">
+        <!-- This div will show status messages -->
+        <div id="message" class="hidden">
             <p id="messageText"></p>
         </div>
 
-        <div class="navigation-link">
-            <p>Already have an account? <a href="login.html">Login here</a></p>
-            <p><a href="index.html">Back to Main App</a></p>
-        </div>
-
+        <p style="margin-top: 20px;">
+            <a href="index.html" style="color: #007bff;">Back to Main App</a>
+        </p>
     </div>
 
-    <!-- We will create a new register.js file for the logic -->
+    <!-- We will create a new JS file for this page -->
     <script src="register.js"></script>
 </body>
 </html>

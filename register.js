@@ -1,69 +1,68 @@
 // register.js
 
-// IMPORTANT: Make sure this URL is correct!
+// IMPORTANT: This must be the same URL from your main script.js
 const BACKEND_URL = "https://ai-crypto-app-backend.onrender.com";
 
-// Get references to the HTML elements
+// Get references to HTML elements
 const usernameInput = document.getElementById("usernameInput");
 const passwordInput = document.getElementById("passwordInput");
 const registerButton = document.getElementById("registerButton");
-const messageSection = document.getElementById("message");
+const messageDiv = document.getElementById("message");
 const messageText = document.getElementById("messageText");
 
-// This function will be called when the button is clicked
 async function handleRegister() {
     const username = usernameInput.value.trim();
     const password = passwordInput.value.trim();
 
     if (!username || !password) {
-        showMessage("Username and password are required.", "error");
+        showMessage("Username and password cannot be empty.", "error");
         return;
     }
 
+    // Disable button to prevent multiple clicks
     registerButton.disabled = true;
     registerButton.textContent = "Registering...";
-    
+
     try {
-        // Send the registration data to our backend's /register endpoint
+        // Send a POST request to our /register endpoint
         const response = await fetch(`${BACKEND_URL}/register`, {
-            method: 'POST', // Use POST method for sending data
+            method: 'POST',
             headers: {
-                'Content-Type': 'application/json' // Tell the server we're sending JSON
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ // Convert the JS object to a JSON string
+            body: JSON.stringify({
                 username: username,
-                password: password
-            })
+                password: password,
+            }),
         });
 
         const data = await response.json();
 
-        // Check if the server responded with an error status code
         if (!response.ok) {
-            throw new Error(data.error || "An unknown error occurred.");
+            // If response is not 2xx, throw an error with the message from the server
+            throw new Error(data.error || "An unknown registration error occurred.");
         }
 
-        // If successful, show a success message
+        // If registration is successful
         showMessage(data.message, "success");
 
     } catch (error) {
-        // If any error happened, show the error message
-        console.error("Registration error:", error);
+        // If any error happened, display it
         showMessage(error.message, "error");
     } finally {
-        // This runs no matter what
+        // Re-enable the button
         registerButton.disabled = false;
         registerButton.textContent = "Register";
     }
 }
 
-// A helper function to display messages
+// Helper function to display messages
 function showMessage(message, type) {
     messageText.textContent = message;
-    // Change color based on success or error
-    messageSection.style.backgroundColor = type === "success" ? "#1a4d2e" : "#5d1a21";
-    messageSection.style.color = type === "success" ? "#d1e7dd" : "#f8d7da";
-    messageSection.classList.remove("hidden");
+    // Change color based on message type (success or error)
+    messageDiv.style.backgroundColor = type === 'success' ? '#1c4b2c' : '#5d1a21';
+    messageDiv.style.color = type === 'success' ? '#d4edda' : '#f8d7da';
+    messageDiv.classList.remove("hidden");
 }
 
 // Add event listener to the button
